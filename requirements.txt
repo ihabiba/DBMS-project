@@ -1,6 +1,6 @@
 Flask==2.3.4
 Flask-SQLAlchemy==3.0.0
 Flask-Login==0.6.2
-pip install gunicorn
-pip freeze > requirements.txt
+gunicorn
+
 
