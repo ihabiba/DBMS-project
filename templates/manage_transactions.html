@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Transactions</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='transaction.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">TRHHM</a>
+        <div class="menu">
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('search') }}">Search</a>
+            <a href="{{ url_for('order') }}">Order</a>
+            <a href="{{ url_for('dashboard') }}">Home</a>
+        </div>
+    </nav>
+    <h1>Manage Transactions</h1>
+
+    <!-- Flash messages for feedback -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('manage_transactions') }}" method="POST">
+        <h2>Record New Transaction</h2>
+
+        <input type="hidden" name="property_id" value="{{ property.id if property else '' }}">
+        <input type="number" name="amount" value="{{ property.price if property else '' }}" readonly>
+        <input type="date" name="date" required>
+        <select name="transaction_type" required>
+            <option value="sale">Sale</option>
+            <option value="rental">Rental</option>
+        </select>
+        <button type="submit">Complete Transaction</button>
+    </form>
+
+    <!-- JavaScript to update the amount field based on selected property -->
+    <script>
+        document.getElementById('property_id').addEventListener('change', function() {
+            var selectedProperty = this.options[this.selectedIndex];
+            var price = selectedProperty.getAttribute('data-price');
+            document.getElementById('amount').value = price;
+        });
+    </script>
+</body>
+</html>

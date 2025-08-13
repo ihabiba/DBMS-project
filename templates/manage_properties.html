@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Properties</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='property.css') }}">
+</head>
+<body>
+    <h1>Manage Properties</h1>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Add New Property Form -->
+    <form action="{{ url_for('manage_properties') }}" method="POST" enctype="multipart/form-data">
+        <h2>Add New Property</h2>
+        <input type="text" name="name" placeholder="Property Name" required>
+        <input type="text" name="location" placeholder="Location" required>
+        <input type="number" name="price" placeholder="Price" step="0.01" required>
+        <input type="number" name="rooms" placeholder="Number of Rooms" required>
+        <input type="text" name="type" placeholder="Type (e.g., Apartment)" required>
+        <textarea name="description" placeholder="Description"></textarea>
+        <input type="file" name="image" accept="image/*">
+        <button type="submit">Add Property</button>
+    </form>
+
+    <!-- Property List -->
+    <h2>Existing Properties</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Price</th>
+                <th>Rooms</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for property in properties %}
+            <tr>
+                <td>{{ property.name }}</td>
+                <td>{{ property.location }}</td>
+                <td>{{ property.price }}</td>
+                <td>{{ property.rooms }}</td>
+                <td>{{ property.type }}</td>
+                <td>{{ property.description }}</td>
+                <td>
+                    {% if property.image %}
+                        <img src="{{ url_for('static', filename=property.image) }}" alt="Property Image" style="width: 100px; height: auto;">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="{{ url_for('update_property', id=property.id) }}" class="btn update">Update</a>
+                        <form action="{{ url_for('delete_property', id=property.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="delete" onclick="return confirm('Are you sure you want to delete this property?')">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

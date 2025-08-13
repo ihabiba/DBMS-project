@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #FE9914;
+            top: 0;
+            position: fixed;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .menu a {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+            margin-right: 40px;
+        }
+
+        .navbar .menu a:hover {
+            color: #e8491d;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image:linear-gradient(rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)), url('https://images.pexels.com/photos/15506669/pexels-photo-15506669/free-photo-of-the-famous-german-opera-house-at-night.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 70px; /* To avoid navbar overlay */
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin: 10px 0 20px;
+        }
+
+        .hero .cta {
+            padding: 10px 20px;
+            background-color: #e8491d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .hero .cta:hover {
+            background-color: #d23c17;
+        }
+
+        /* Links Section */
+        .links {
+            margin: 40px;
+            text-align: center;
+        }
+        .cta{
+            background-color: red;
+            padding: 10px;
+            border: 0 solid;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="logo">TRHHM</a>
+        <div class="menu">
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('search') }}">Search</a>
+            <a href="{{ url_for('order') }}">Order</a>
+            <a href="{{ url_for('index') }}"><button class="cta">log out</button></a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div>
+            <p>Alor Setar, Albukhary</p>
+            <h1>FIND YOUR PERFECT HOUSE WITH US!</h1>
+            <a href="{{ url_for('search') }}"><button class="cta">Explore Now</button></a>
+        </div>
+    </section>
+
+    <!-- Links to Management Pages -->
+</body>
+</html>

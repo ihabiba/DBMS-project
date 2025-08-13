@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='order.css') }}">
+</head>
+<body>
+    <h1>Order Summary</h1>
+
+    <!-- Flash messages for feedback -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h2>Transaction Details</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Property Name</th>
+                <th>Amount Paid</th>
+                <th>Transaction Type</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction['property_name'] }}</td>
+                <td>${{ transaction['amount'] }}</td>
+                <td>{{ transaction['transaction_type'] }}</td>
+                <td>{{ transaction['date'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Total Amount: ${{ total_amount }}</h3>
+
+    <a href="{{ url_for('search') }}">Record Another Transaction</a>
+</body>
+</html>

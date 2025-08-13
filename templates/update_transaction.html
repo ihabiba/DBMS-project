@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Transaction</title>
+</head>
+<body>
+    <h1>Update Rental Transaction</h1>
+
+    <!-- Flash messages for feedback -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('update_transaction', id=transaction['id']) }}" method="POST">
+        <label for="amount">Amount</label>
+        <input type="number" name="amount" value="{{ transaction['amount'] }}" required>
+
+        <label for="date">Date</label>
+        <input type="date" name="date" value="{{ transaction['date'] }}" required>
+
+        <button type="submit">Update Transaction</button>
+    </form>
+</body>
+</html>

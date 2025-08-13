@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #FE9914;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 10px;
+        }
+
+        .navbar .menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+            margin-right: 30px;
+        }
+
+        .navbar .menu a:hover {
+            color: #333;
+        }
+
+        .container {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                              url('https://images.pexels.com/photos/15506669/pexels-photo-15506669/free-photo-of-the-famous-german-opera-house-at-night.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 80px 20px 20px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .card h3 {
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .card p {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .card .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff6600;
+            margin-top: 10px;
+        }
+
+        .button {
+            background-color: #ff6600;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #ff9933;
+        }
+
+        /* Table Styling for Property Trends */
+        table {
+            width: 100%;
+            margin-top: 40px;
+            border-collapse: collapse;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #FE9914;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        table td {
+            color: #333;
+        }
+
+        table tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        h2 {
+            margin-top: 50px;
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Ensure responsiveness */
+        @media (max-width: 768px) {
+            table, th, td {
+                display: block;
+                width: 100%;
+            }
+
+            table th {
+                background-color: #FE9914;
+                color: white;
+            }
+
+            table tr {
+                margin-bottom: 20px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            table td {
+                padding: 10px;
+                text-align: left;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo">TRHHM</a>
+        <div class="menu">
+            <a href="{{ url_for('profile') }}">Profile</a>
+            <a href="{{ url_for('search') }}">Search</a>
+            <a href="{{ url_for('order') }}">Order</a>
+            <a href="{{ url_for('dashboard') }}">Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Loop through each property passed from the backend -->
+        {% for property in properties %}
+        <div class="card">
+            <img src="{{ property.image_url or 'https://i.pinimg.com/564x/93/f9/a4/93f9a4088e2a109734926e7030f95481.jpg' }}" alt="Property Image">
+            <h3>{{ property.name }}</h3>
+            <p>Location: {{ property.location }}</p>
+            <p>Rooms: {{ property.rooms }}</p>
+            <p class="price">${{ '{:,.2f}'.format(property.price) }}</p>
+            <form action="{{ url_for('manage_transactions') }}" method="get">
+                <input type="hidden" name="property_id" value="{{ property.id }}">
+                <button type="submit" class="button">Rent/Buy</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Trends section: Add after property listing -->
+    <h2>Property Trends</h2>
+    <table border="1">
+        <tr>
+            <th>Property Name</th>
+            <th>Location</th>
+            <th>Times Sold</th>
+            <th>Times Rented</th>
+        </tr>
+        {% for trend in trends %}
+        <tr>
+            <td>{{ trend.property_name }}</td>
+            <td>{{ trend.location }}</td>
+            <td>{{ trend.times_sold }}</td>
+            <td>{{ trend.times_rented }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

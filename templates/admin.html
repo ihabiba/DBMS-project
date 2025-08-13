@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* Button Styles */
+        .links a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #FE9914;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .links a:hover {
+            background-color: #d23c17;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, Admin!</h1>
+    <p>This is the admin dashboard.</p>
+
+    <!-- Logout Link -->
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+    <!-- Admin Navigation Links -->
+    <div class="links">
+        <a href="{{ url_for('manage_properties') }}">Manage Properties</a>
+        <a href="{{ url_for('manage_clients') }}">Manage Clients</a>
+        <a href="{{ url_for('manage_transactions') }}">Manage Transactions</a>
+    </div>
+</body>
+</html>

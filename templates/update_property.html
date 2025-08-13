@@ -1,0 +1,37 @@
+<!-- templates/update_property.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Property</title>
+</head>
+<body>
+    <h1>Update Property</h1>
+
+    <!-- Flash messages for feedback -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Update Property Form -->
+    <form action="{{ url_for('update_property', id=property.id) }}" method="POST">
+        <input type="text" name="name" value="{{ property.name }}" placeholder="Property Name" required>
+        <input type="text" name="location" value="{{ property.location }}" placeholder="Location" required>
+        <input type="number" name="price" value="{{ property.price }}" placeholder="Price" step="0.01" required>
+        <input type="number" name="rooms" value="{{ property.rooms }}" placeholder="Number of Rooms" required>
+        <input type="text" name="type" value="{{ property.type }}" placeholder="Type (e.g., Apartment)" required>
+        <textarea name="description" placeholder="Description">{{ property.description }}</textarea>
+        <select name="availability_status">
+            <option value="available" {% if property.availability_status == 'available' %}selected{% endif %}>Available</option>
+            <option value="unavailable" {% if property.availability_status == 'unavailable' %}selected{% endif %}>Unavailable</option>
+        </select>
+        <button type="submit">Update Property</button>
+    </form>
+</body>
+</html>
